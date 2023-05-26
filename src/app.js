@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 
 // Import Routes
 import authRoute from "./routes/auth.js";
+import flightRoute from "./routes/flights.js"
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/auth", authRoute);
+app.use("/flights", flightRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
