@@ -1,4 +1,6 @@
-import { getFlightsCount, getFlightsPage } from "../services/flightsService.js"
+import { flightService } from "../services/flightService.js";
+
+const { getFlightsCount, getFlightsPage } = flightService;
 
 export const getFlights = async (req, res) => {
   const { page } = req?.query;
