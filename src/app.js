@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import authRoute from "./routes/auth.js";
 import flightRoute from "./routes/flights.js";
 import cityRoute from "./routes/cities.js";
+import airlineRoute from "./routes/airlines.js";
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoute);
 app.use("/flights", flightRoute);
 app.use("/cities", cityRoute);
+app.use("/airlines", airlineRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

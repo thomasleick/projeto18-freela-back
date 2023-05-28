@@ -1,7 +1,7 @@
 import pool from "../configs/dbConn.js";
 
 export const cityRepository = {
-  getCities: async (filters) => {
+  getCities: async () => {
     let query = "SELECT * FROM cities";
 
     const client = await pool.connect();

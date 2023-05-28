@@ -8,6 +8,14 @@ export const getFlights = async (req, res) => {
 
   try {
     const flightCount = await getFlightsCount(req?.query);
+    if (flightCount === "0") {
+      return res.status(204).send({
+        flightCount: 0,
+        maxPage: 0,
+        flights: [],
+        page: 0,
+      });
+    }
     const maxPage = Math.ceil(flightCount / pageLenght);
     const parsedPage = parseInt(page);
 

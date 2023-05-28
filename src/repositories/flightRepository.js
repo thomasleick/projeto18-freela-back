@@ -14,6 +14,7 @@ export const flightRepository = {
         values: values,
       };
       const count = await client.query(fullQuery);
+
       return count.rows[0].total_rows;
     } catch (err) {
       console.error("Error getting flights count", err);
@@ -45,8 +46,8 @@ export const flightRepository = {
         values: values,
       };
       console.log(fullQuery);
-      const count = await client.query(fullQuery);
-      return count.rows;
+      const flights = await client.query(fullQuery);
+      return flights.rows;
     } catch (err) {
       console.error("Error getting flights", err);
       throw err;
