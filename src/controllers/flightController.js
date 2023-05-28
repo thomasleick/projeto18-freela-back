@@ -1,6 +1,6 @@
 import { flightService } from "../services/flightService.js";
 
-const { getFlightsCount, getFlightsPage } = flightService;
+const { getFlightsCount, getFlightsPage, getFlight } = flightService;
 
 export const getFlights = async (req, res) => {
   const { page } = req?.query;
@@ -29,6 +29,19 @@ export const getFlights = async (req, res) => {
       flights,
       page: parsedPage,
     });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send(err);
+  }
+};
+
+export const getFlightById = async (req, res) => {
+  try {
+    const flight = await getFlight(req?.params?.id);
+    if (!flight) {
+      return res.sendStatus(404);
+    }
+    return res.status(200).json(flight);
   } catch (err) {
     console.error(err);
     return res.status(500).send(err);

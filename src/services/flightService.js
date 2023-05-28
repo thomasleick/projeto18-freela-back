@@ -7,5 +7,8 @@ export const flightService = {
 
   getFlightsPage: async (filters) => {
     return await flightRepository.getFlightsPage(filters);
-  }
+  },
+  getFlight: async (id) => {
+    return await flightRepository.getFlight(id);
+  },
 };

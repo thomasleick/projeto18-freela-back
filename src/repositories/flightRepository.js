@@ -54,5 +54,25 @@ export const flightRepository = {
     } finally {
       client.release();
     }
+  },
+  getFlight: async (id) => {
+    const query = "SELECT * FROM flights WHERE flight_id=$1";
+    const values = [id];
+
+    const client = await pool.connect();
+    try {
+      const fullQuery = {
+        text: query,
+        values: values,
+      };
+      const flight = await client.query(fullQuery);
+
+      return flight.rows[0];
+    } catch (err) {
+      console.error("Error getting flight", err);
+      throw err;
+    } finally {
+      client.release();
+    }
   }
 };
