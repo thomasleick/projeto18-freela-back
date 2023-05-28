@@ -1,10 +1,9 @@
 export const buildKiwi = (filters) => {
-    console.log(filters)
     const {
-      airline_id,
+      airlineList,
       departureCities,
       destinationCities,
-      departure_time,
+      selectedDate,
       arrival_time,
       minPrice,
       maxPrice,
@@ -18,9 +17,11 @@ export const buildKiwi = (filters) => {
     let i = 1;
     let query = ``;
   
-    if (airline_id) {
-      query += ` AND f.airline_id = $${i}`;
-      values.push(airline_id);
+    if (airlineList) {
+        const idsArray = airlineList.split(",");
+      const numericIdsArray = idsArray.map(Number);
+      query += ` AND f.airline_id = ANY($${i}::int[])`;
+      values.push(numericIdsArray);
       i++;
     }
     if (departureCities) {
@@ -37,11 +38,11 @@ export const buildKiwi = (filters) => {
       values.push(numericIdsArray);
       i++;
     }
-    if (departure_time) {
-      query += ` AND f.departure_time = $${i}`;
-      values.push(departure_time);
-      i++;
-    }
+    if (selectedDate) {
+        query += ` AND f.departure_time::date = $${i}`;
+        values.push(selectedDate);
+        i++;
+      }
     if (arrival_time) {
       query += ` AND f.arrival_time = $${i}`;
       values.push(arrival_time);
