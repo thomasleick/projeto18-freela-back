@@ -24,7 +24,7 @@ export const airlineRepository = {
       const airlines = await client.query(query, [airline_name]);
       return airlines.rows[0];
     } catch (err) {
-      console.error("Error getting airlines", err);
+      console.error("Error getting airline", err);
       throw err;
     } finally {
       client.release();
@@ -38,7 +38,7 @@ export const airlineRepository = {
       const airlines = await client.query(query, [airline_name]);
       return airlines.rows[0];
     } catch (err) {
-      console.error("Error getting airlines", err);
+      console.error("Error inserting airline", err);
       throw err;
     } finally {
       client.release();

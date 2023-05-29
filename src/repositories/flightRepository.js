@@ -79,4 +79,24 @@ export const flightRepository = {
       client.release();
     }
   },
+
+  createFlight: async (flight) => {
+    const client = await pool.connect();
+
+    const columns = Object.keys(flight).join(", ");
+    const placeholders = Object.keys(flight)
+      .map((_, index) => `$${index + 1}`)
+      .join(", ");
+
+    const query = `INSERT INTO flights(${columns}) VALUES(${placeholders})`;
+    try {
+      const response = await client.query(query, Object.values(flight));
+      return response.rows[0];
+    } catch (err) {
+      console.error("Error inserting flight", err);
+      throw err;
+    } finally {
+      client.release();
+    }
+  },
 };

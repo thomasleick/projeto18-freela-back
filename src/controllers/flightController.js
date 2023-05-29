@@ -47,3 +47,13 @@ export const getFlightById = async (req, res) => {
     return res.status(500).send(err);
   }
 };
+
+export const postFlight = async (req, res) => {
+  try {
+    await flightService.createFlight(req.body);
+    res.status(201).json({ message: "Flight created!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
