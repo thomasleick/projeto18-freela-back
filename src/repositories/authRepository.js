@@ -39,7 +39,7 @@ export const deleteRefreshToken = async (id) => {
   const client = await pool.connect();
   try {
     const query = {
-      text: `UPDATE users SET "refreshToken" = $1 WHERE id = $2`,
+      text: `UPDATE users SET "refresh_token" = $1 WHERE id = $2`,
       values: ["", id],
     };
     await client.query(query);

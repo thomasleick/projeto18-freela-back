@@ -28,8 +28,7 @@ export const flightRepository = {
     const { page, limit } = filters;
     const parsedPage = page || 1;
     const offset = limit * (parsedPage - 1);
-    let query =
-      `SELECT f.flight_id, a.airline_name, dc.city_name AS departure_city_name, dd.city_name AS 
+    let query = `SELECT f.flight_id, a.airline_name, dc.city_name AS departure_city_name, dd.city_name AS 
         destination_city_name, f.departure_time, f.arrival_time, f.price 
       FROM flights f
       JOIN airlines a ON f.airline_id = a.airline_id
@@ -56,7 +55,12 @@ export const flightRepository = {
     }
   },
   getFlight: async (id) => {
-    const query = "SELECT * FROM flights WHERE flight_id=$1";
+    const query = `SELECT f.flight_id, a.airline_name, dc.city_name AS departure_city_name, dd.city_name AS 
+      destination_city_name, f.departure_time, f.arrival_time, f.price 
+    FROM flights f
+    JOIN airlines a ON f.airline_id = a.airline_id
+    JOIN cities dc ON f.departure_city_id = dc.city_id
+    JOIN cities dd ON f.destination_city_id = dd.city_id WHERE flight_id=$1`;
     const values = [id];
 
     const client = await pool.connect();
@@ -74,5 +78,5 @@ export const flightRepository = {
     } finally {
       client.release();
     }
-  }
+  },
 };
