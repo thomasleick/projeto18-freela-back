@@ -5,4 +5,7 @@ export const photoService = {
     return await photoRepository.getPhotos(hotel_id);
   },
 
+  createPhoto: async (photo) => {
+    return await photoRepository.createPhoto(photo);
+  },
 };
