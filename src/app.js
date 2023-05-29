@@ -11,6 +11,7 @@ import flightRoute from "./routes/flights.js";
 import cityRoute from "./routes/cities.js";
 import airlineRoute from "./routes/airlines.js";
 import hotelRoute from "./routes/hotels.js";
+import photoRoute from "./routes/photos.js";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/flights", flightRoute);
 app.use("/cities", cityRoute);
 app.use("/airlines", airlineRoute);
 app.use("/hotels", hotelRoute);
+app.use("/photos", photoRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
