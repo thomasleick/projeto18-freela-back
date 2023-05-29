@@ -13,7 +13,7 @@ export const hotelRepository = {
         text: query,
         values: values,
       };
-      console.log(fullQuery)
+      console.log(fullQuery);
       const count = await client.query(fullQuery);
 
       return count.rows[0].total_rows;
@@ -53,10 +53,15 @@ export const hotelRepository = {
     }
   },
   getHotel: async (id) => {
-    const query = `SELECT h.hotel_id, c.city_name, h.hotel_name, h.description, h.amenities, h.price_per_night
-    FROM hotels h
-    JOIN cities c ON c.city_id = h.city_id
-    WHERE hotel_id=$1`;
+    const query = `SELECT h.hotel_id, c.city_name, h.hotel_name, h.description, h.amenities, h.price_per_night,
+      (
+        SELECT json_agg(json_build_object('photo_id', p.photo_id, 'photo_url', p.photo_url))
+        FROM photos p
+        WHERE p.hotel_id = h.hotel_id
+      ) AS photos
+      FROM hotels h
+      JOIN cities c ON c.city_id = h.city_id
+      WHERE h.hotel_id = $1`;
     const values = [id];
 
     const client = await pool.connect();
@@ -65,9 +70,11 @@ export const hotelRepository = {
         text: query,
         values: values,
       };
-      const hotel = await client.query(fullQuery);
+      const result = await client.query(fullQuery);
 
-      return hotel.rows[0];
+      const hotel = result.rows[0];
+
+      return hotel;
     } catch (err) {
       console.error("Error getting hotel", err);
       throw err;
