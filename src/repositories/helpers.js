@@ -1,4 +1,4 @@
-export const buildKiwi = (filters) => {
+export const buildFlightKiwi = (filters) => {
     const {
       airlineList,
       departureCities,
@@ -74,7 +74,56 @@ export const buildKiwi = (filters) => {
       values.push(offset);
       i++;
     }
-    console.log(query)
-    console.log(values)
+    return [query, values];
+  };
+
+  export const buildHotelKiwi = (filters) => {
+    const {
+      cities,
+      minPrice,
+      maxPrice,
+      order,
+      desc,
+      limit,
+      offset,
+    } = filters;
+  
+    const values = [];
+    let i = 1;
+    let query = ``;
+  
+    if (cities) {
+        const idsArray = cities.split(",");
+      const numericIdsArray = idsArray.map(Number);
+      query += ` AND h.city_id = ANY($${i}::int[])`;
+      values.push(numericIdsArray);
+      i++;
+    }
+    if (minPrice) {
+      query += ` AND h.price_per_night >= $${i}`;
+      values.push(minPrice);
+      i++;
+    }
+    if (maxPrice) {
+      query += ` AND h.price_per_night <= $${i}`;
+      values.push(maxPrice);
+      i++;
+    }
+    if (order) {
+      query += ` ORDER BY h.${order}`;
+      if (desc) {
+        query += ` DESC`;
+      }
+    }
+    if (limit) {
+      query += ` LIMIT $${i}`;
+      values.push(limit);
+      i++;
+    }
+    if (offset) {
+      query += ` OFFSET $${i}`;
+      values.push(offset);
+      i++;
+    }
     return [query, values];
   };

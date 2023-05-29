@@ -1,11 +1,11 @@
 import pool from "../configs/dbConn.js";
-import { buildKiwi } from "./helpers.js";
+import { buildHotelKiwi } from "./helpers.js";
 
 export const hotelRepository = {
   getHotelsCount: async (filters) => {
-    let query = "SELECT COUNT(h.*) AS total_rows FROM hotels h";
+    let query = "SELECT COUNT(h.*) AS total_rows FROM hotels h WHERE 1=1";
 
-    const [kiwi, values] = buildKiwi({ ...filters, order: "" });
+    const [kiwi, values] = buildHotelKiwi({ ...filters, order: "" });
     query += kiwi;
     const client = await pool.connect();
     try {
@@ -13,6 +13,7 @@ export const hotelRepository = {
         text: query,
         values: values,
       };
+      console.log(fullQuery)
       const count = await client.query(fullQuery);
 
       return count.rows[0].total_rows;
@@ -33,7 +34,7 @@ export const hotelRepository = {
     JOIN cities c ON c.city_id = h.city_id
     WHERE 1=1`;
 
-    const [kiwi, values] = buildKiwi({ ...filters, offset });
+    const [kiwi, values] = buildHotelKiwi({ ...filters, offset });
     query += kiwi;
     const client = await pool.connect();
     try {

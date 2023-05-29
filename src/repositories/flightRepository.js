@@ -1,11 +1,11 @@
 import pool from "../configs/dbConn.js";
-import { buildKiwi } from "./helpers.js";
+import { buildFlightKiwi } from "./helpers.js";
 
 export const flightRepository = {
   getFlightsCount: async (filters) => {
     let query = "SELECT COUNT(f.*) AS total_rows FROM flights f WHERE 1=1";
 
-    const [kiwi, values] = buildKiwi({ ...filters, order: "" });
+    const [kiwi, values] = buildFlightKiwi({ ...filters, order: "" });
     query += kiwi;
     const client = await pool.connect();
     try {
@@ -36,7 +36,7 @@ export const flightRepository = {
       JOIN cities dd ON f.destination_city_id = dd.city_id
       WHERE 1=1`;
 
-    const [kiwi, values] = buildKiwi({ ...filters, offset });
+    const [kiwi, values] = buildFlightKiwi({ ...filters, offset });
     query += kiwi;
     const client = await pool.connect();
     try {
