@@ -5,5 +5,6 @@ import { validateIdAsParams } from "../middlewares/validateParams.js";
 const router = Router();
 
 router.get("/:id", validateIdAsParams,getPhotos);
+router.post("/",);
 
 export default router;

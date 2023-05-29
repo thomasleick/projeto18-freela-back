@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/", getFlights);
 router.get("/:id", validateIdAsParams, getFlightById);
+router.post("/",);
 
 export default router;

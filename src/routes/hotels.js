@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/", getHotels);
 router.get("/:id", validateIdAsParams, getHotelById);
+router.post("/",);
 
 export default router;
