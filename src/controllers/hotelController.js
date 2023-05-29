@@ -47,3 +47,13 @@ export const getHotelById = async (req, res) => {
     return res.status(500).send(err);
   }
 };
+
+export const postHotel = async (req, res) => {
+  try {
+    await hotelService.createHotel(req.body);
+    res.status(201).json({ message: "Hotel created!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}

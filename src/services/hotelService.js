@@ -8,7 +8,12 @@ export const hotelService = {
   getHotelsPage: async (filters) => {
     return await hotelRepository.getHotelsPage(filters);
   },
+
   getHotel: async (id) => {
     return await hotelRepository.getHotel(id);
+  },
+
+  createHotel: async (hotel) => {
+    return await hotelRepository.createHotel(hotel);
   },
 };

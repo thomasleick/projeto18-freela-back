@@ -82,4 +82,24 @@ export const hotelRepository = {
       client.release();
     }
   },
+
+  createHotel: async (hotel) => {
+    const client = await pool.connect();
+
+    const columns = Object.keys(hotel).join(", ");
+    const placeholders = Object.keys(hotel)
+      .map((_, index) => `$${index + 1}`)
+      .join(", ");
+
+    const query = `INSERT INTO hotels(${columns}) VALUES(${placeholders})`;
+    try {
+      const response = await client.query(query, Object.values(hotel));
+      return response.rows[0];
+    } catch (err) {
+      console.error("Error inserting hotel", err);
+      throw err;
+    } finally {
+      client.release();
+    }
+  },
 };
