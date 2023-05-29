@@ -6,7 +6,7 @@ import photoSchema from "../schemas/photoSchema.js";
 
 const router = Router();
 
-router.get("/:id", validateIdAsParams,getPhotos);
+router.get("/:id", validateIdAsParams, getPhotos);
 router.post("/", schemaValidator(photoSchema), postPhoto);
 
 export default router;

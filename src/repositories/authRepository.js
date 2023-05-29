@@ -24,7 +24,7 @@ export const findUserByRefreshToken = async (refreshToken) => {
       `SELECT * FROM users WHERE refresh_token=$1`,
       [refreshToken]
     );
-    console.debug(refreshToken)
+    console.debug(refreshToken);
     console.debug(result.rows);
     return result.rows[0];
   } catch (err) {

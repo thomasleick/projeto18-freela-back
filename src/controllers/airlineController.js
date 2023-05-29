@@ -1,7 +1,7 @@
 import { airlineService } from "../services/airlineService.js";
 
 export const getAirlines = async (req, res) => {
-  try { 
+  try {
     const airlines = await airlineService.getAirlines();
     return res.status(200).send({ airlines });
   } catch (err) {
@@ -12,7 +12,9 @@ export const getAirlines = async (req, res) => {
 
 export const postAirline = async (req, res) => {
   try {
-    const foundAirline = await airlineService.findAirlineByName(req.body.airline_name.toLowerCase());
+    const foundAirline = await airlineService.findAirlineByName(
+      req.body.airline_name.toLowerCase()
+    );
     if (foundAirline) {
       return res
         .status(409)
@@ -24,4 +26,4 @@ export const postAirline = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
-}
+};
